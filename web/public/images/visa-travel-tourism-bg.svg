@@ -1,0 +1,64 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Professional travel/tourism background -->
+  <defs>
+    <linearGradient id="travelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#A855F7;stop-opacity:0.05" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#travelGradient)"/>
+  
+  <!-- Mountains/landscape -->
+  <polygon points="100,600 200,400 300,500 400,350 500,450 600,600" fill="white" opacity="0.06"/>
+  <polygon points="400,600 500,300 600,400 700,250 800,350 900,600" fill="white" opacity="0.05"/>
+  
+  <!-- Airplane -->
+  <path d="M800 200 L850 190 L880 200 L850 210 Z" fill="white" opacity="0.08"/>
+  <path d="M820 195 L840 185 L840 215 Z" fill="white" opacity="0.06"/>
+  <line x1="850" y1="200" x2="900" y2="200" stroke="white" stroke-width="1" opacity="0.05"/>
+  
+  <!-- Suitcase -->
+  <rect x="200" y="500" width="60" height="80" rx="8" fill="white" opacity="0.07"/>
+  <rect x="220" y="490" width="20" height="10" rx="2" fill="white" opacity="0.09"/>
+  <circle cx="210" cy="570" r="8" fill="white" opacity="0.06"/>
+  <circle cx="250" cy="570" r="8" fill="white" opacity="0.06"/>
+  
+  <!-- Camera -->
+  <rect x="600" y="300" width="50" height="35" rx="5" fill="white" opacity="0.08"/>
+  <circle cx="635" cy="317" r="12" fill="white" opacity="0.06"/>
+  <rect x="615" y="305" width="8" height="5" rx="1" fill="white" opacity="0.1"/>
+  
+  <!-- Passport/document -->
+  <rect x="400" y="150" width="40" height="60" rx="3" fill="white" opacity="0.07"/>
+  <rect x="405" y="160" width="30" height="2" fill="white" opacity="0.09"/>
+  <rect x="405" y="170" width="25" height="2" fill="white" opacity="0.08"/>
+  <rect x="405" y="180" width="28" height="2" fill="white" opacity="0.07"/>
+  
+  <!-- Globe/Earth -->
+  <circle cx="1000" cy="300" r="50" fill="white" opacity="0.05"/>
+  <path d="M970 300 Q985 280 1000 300 Q1015 320 1030 300" stroke="white" stroke-width="2" opacity="0.06" fill="none"/>
+  <path d="M1000 270 Q1020 285 1000 300 Q980 315 1000 330" stroke="white" stroke-width="2" opacity="0.06" fill="none"/>
+  
+  <!-- Palm tree -->
+  <line x1="150" y1="400" x2="150" y2="500" stroke="white" stroke-width="4" opacity="0.06"/>
+  <ellipse cx="150" cy="390" rx="20" ry="10" fill="white" opacity="0.07"/>
+  <ellipse cx="140" cy="385" rx="15" ry="8" fill="white" opacity="0.06"/>
+  <ellipse cx="160" cy="385" rx="15" ry="8" fill="white" opacity="0.06"/>
+  
+  <!-- Sun -->
+  <circle cx="1100" cy="150" r="30" fill="white" opacity="0.05"/>
+  <line x1="1100" y1="100" x2="1100" y2="110" stroke="white" stroke-width="2" opacity="0.06"/>
+  <line x1="1100" y1="190" x2="1100" y2="200" stroke="white" stroke-width="2" opacity="0.06"/>
+  <line x1="1150" y1="150" x2="1140" y2="150" stroke="white" stroke-width="2" opacity="0.06"/>
+  <line x1="1060" y1="150" x2="1050" y2="150" stroke="white" stroke-width="2" opacity="0.06"/>
+  
+  <!-- Decorative dots -->
+  <circle cx="300" cy="100" r="8" fill="white" opacity="0.08"/>
+  <circle cx="500" cy="80" r="6" fill="white" opacity="0.1"/>
+  <circle cx="700" cy="120" r="10" fill="white" opacity="0.06"/>
+  <circle cx="900" cy="100" r="7" fill="white" opacity="0.09"/>
+  <circle cx="200" cy="650" r="12" fill="white" opacity="0.05"/>
+  <circle cx="800" cy="600" r="9" fill="white" opacity="0.07"/>
+</svg>

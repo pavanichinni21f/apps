@@ -1,0 +1,28 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <rect width="1024" height="1024" rx="180" fill="url(#gradient)"/>
+  
+  <!-- Main logo design -->
+  <g transform="translate(512, 512)">
+    <!-- Letter S -->
+    <path d="M-120 -150C-120 -183.137 -93.137 -210 -60 -210H60C93.137 -210 120 -183.137 120 -150V-90C120 -56.863 93.137 -30 60 -30C26.863 -30 0 -56.863 0 -90V-150H-60V-30H60C93.137 -30 120 -3.137 120 30V90C120 123.137 93.137 150 60 150H-60C-93.137 150 -120 123.137 -120 90V30C-120 -3.137 -93.137 -30 -60 -30C-26.863 -30 0 -3.137 0 30V90H60V30H-60C-93.137 30 -120 3.137 -120 -30V-150Z" fill="white"/>
+    
+    <!-- Letter I (simplified as a line) -->
+    <rect x="-15" y="180" width="30" height="120" rx="15" fill="white"/>
+    
+    <!-- Decorative elements -->
+    <circle cx="-180" cy="-180" r="20" fill="white" opacity="0.3"/>
+    <circle cx="180" cy="-180" r="15" fill="white" opacity="0.4"/>
+    <circle cx="180" cy="180" r="25" fill="white" opacity="0.2"/>
+    <circle cx="-180" cy="180" r="18" fill="white" opacity="0.35"/>
+  </g>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1E40AF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E3A8A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
