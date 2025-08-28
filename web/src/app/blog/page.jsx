@@ -1,7 +1,13 @@
+"use client";
+
 import { useState } from 'react';
 import { Calendar, User, ArrowRight, Search, Tag } from 'lucide-react';
+import NavigationBar from '../../components/HomePage/NavigationBar';
+import Footer from '../../components/HomePage/Footer';
+import { useDarkMode } from '../../hooks/useDarkMode';
 
 export default function BlogPage() {
+  const { darkMode, setDarkMode } = useDarkMode();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categories = [
@@ -104,9 +110,15 @@ export default function BlogPage() {
   const featuredPost = blogPosts.find(post => post.featured);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen transition-colors duration-300 ${
+      darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'
+    }`}>
+      <NavigationBar showTopHeader={true} />
+      
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+      <section className={`py-20 ${
+        darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-700' : 'bg-gradient-to-r from-blue-600 to-blue-800'
+      } text-white`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Insights & Expertise
@@ -128,7 +140,9 @@ export default function BlogPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-8 bg-gray-50 border-b">
+      <section className={`py-8 border-b ${
+        darkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
@@ -150,7 +164,9 @@ export default function BlogPage() {
 
       {/* Featured Post */}
       {featuredPost && selectedCategory === 'all' && (
-        <section className="py-16">
+        <section className={`py-16 ${
+          darkMode ? 'bg-gray-900' : 'bg-white'
+        }`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Featured Article</h2>
@@ -198,7 +214,9 @@ export default function BlogPage() {
       )}
 
       {/* Blog Posts Grid */}
-      <section className="py-16">
+      <section className={`py-16 ${
+        darkMode ? 'bg-gray-800' : 'bg-gray-50'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -255,7 +273,9 @@ export default function BlogPage() {
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-20 bg-blue-600 text-white">
+      <section className={`py-20 ${
+        darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-700' : 'bg-blue-600'
+      } text-white`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Stay Updated</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -275,6 +295,8 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

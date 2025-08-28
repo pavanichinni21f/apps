@@ -4,14 +4,14 @@ import { reactRouterHonoServer } from 'react-router-hono-server/dev';
 import { defineConfig } from 'vite';
 import babel from 'vite-plugin-babel';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { addRenderIds } from './plugins/addRenderIds';
-import { aliases } from './plugins/aliases';
-import consoleToParent from './plugins/console-to-parent';
-import { layoutWrapperPlugin } from './plugins/layouts';
-import { loadFontsFromTailwindSource } from './plugins/loadFontsFromTailwindSource';
-import { nextPublicProcessEnv } from './plugins/nextPublicProcessEnv';
-import { restart } from './plugins/restart';
-import { restartEnvFileChange } from './plugins/restartEnvFileChange';
+import { addRenderIds } from './plugins/addRenderIds.js';
+import { aliases } from './plugins/aliases.js';
+import consoleToParent from './plugins/console-to-parent.js';
+import { layoutWrapperPlugin } from './plugins/layouts.js';
+import { loadFontsFromTailwindSource } from './plugins/loadFontsFromTailwindSource.js';
+import { nextPublicProcessEnv } from './plugins/nextPublicProcessEnv.js';
+import { restart } from './plugins/restart.js';
+import { restartEnvFileChange } from './plugins/restartEnvFileChange.js';
 
 export default defineConfig({
   // Keep them available via import.meta.env.NEXT_PUBLIC_*

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { GraduationCap, CheckCircle, FileText, Clock, ArrowRight, ChevronDown, ChevronUp, Users, Globe, BookOpen, Award, CheckSquare } from 'lucide-react';
+import NavigationBar from '../../../components/HomePage/NavigationBar';
+import Footer from '../../../components/HomePage/Footer';
 
 export default function StudyAbroadVisaPage() {
   const [openFaq, setOpenFaq] = useState(null);
@@ -107,29 +109,11 @@ export default function StudyAbroadVisaPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center mr-3">
-                <CheckSquare className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-blue-900">SigninSoft</div>
-                <div className="text-xs text-orange-500 -mt-1">Get into your Future</div>
-              </div>
-            </div>
-            <div className="flex items-center space-x-6">
-              <a href="/" className="text-gray-700 hover:text-orange-500 transition-colors">Home</a>
-              <a href="/#services" className="text-gray-700 hover:text-orange-500 transition-colors">Services</a>
-              <a href="#contact" className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors">Contact</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
+      <NavigationBar showTopHeader={true} />
+      <main className="relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-orange-50/50 pointer-events-none"></div>
+        <div className="relative z-10">
+        {/* Hero Section */}
       <section className="relative py-20 bg-blue-900 text-white">
         <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{
           backgroundImage: "url('/images/visa-study-abroad-bg.svg')"
@@ -386,56 +370,9 @@ export default function StudyAbroadVisaPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-blue-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <div className="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center mr-3">
-                  <CheckSquare className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-white">SigninSoft</div>
-                  <div className="text-xs text-orange-400 -mt-1">Get into your Future</div>
-                </div>
-              </div>
-              <p className="text-gray-300">
-                Leading consulting, business solution and systems integration firm.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Visa Services</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><a href="/visa/study-abroad" className="hover:text-orange-400 transition-colors">Study Abroad Visas</a></li>
-                <li><a href="/visa/work-business" className="hover:text-orange-400 transition-colors">Work & Business Visas</a></li>
-                <li><a href="/visa/travel-tourism" className="hover:text-orange-400 transition-colors">Travel & Tourism</a></li>
-                <li><a href="/visa/extension-renewal" className="hover:text-orange-400 transition-colors">Extension & Renewal</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-orange-400 transition-colors">Document Verification</a></li>
-                <li><a href="#" className="hover:text-orange-400 transition-colors">Immigration Consultation</a></li>
-                <li><a href="#" className="hover:text-orange-400 transition-colors">Pre-departure Guidance</a></li>
-                <li><a href="#" className="hover:text-orange-400 transition-colors">24/7 Support</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-              <div className="space-y-2 text-gray-300">
-                <p>Email: visas@SigninSoft.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
-                <p>Address: 123 Business Ave, Suite 100</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-blue-800 mt-8 pt-8 text-center text-gray-300">
-            <p>&copy; 2024 SigninSoft. All rights reserved.</p>
-          </div>
         </div>
-      </footer>
+      </main>
+      <Footer />
     </div>
   );
 }
