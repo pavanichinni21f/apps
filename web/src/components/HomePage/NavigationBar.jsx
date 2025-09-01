@@ -58,7 +58,8 @@ export default function NavigationBar({ showTopHeader = true }) {
                     <a href="/services/business-consulting" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Business Consulting</a>
                     <a href="/services/employment-consulting" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Employment Consulting</a>
                     <a href="/services/software-development" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Software Development</a>
-                    <a href="/services/ui-ux-design" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">UI/UX Design</a>
+                    <a href="/services/ux-design" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">UI/UX Design</a>
+                    <a href="/services/cybersecurity" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Cybersecurity</a>
                     <a href="/services/data-analytics" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Data & Analytics</a>
                   </div>
                 </div>
@@ -149,6 +150,10 @@ export default function NavigationBar({ showTopHeader = true }) {
                 <a href="/career" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Career</a>
                 <a href="/services/business-consulting" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Business Consulting</a>
                 <a href="/services/employment-consulting" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Employment Consulting</a>
+                <a href="/services/software-development" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Software Development</a>
+                <a href="/services/ux-design" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">UI/UX Design</a>
+                <a href="/services/cybersecurity" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Cybersecurity</a>
+                <a href="/services/data-analytics" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Data & Analytics</a>
                 <a href="/visa/study-abroad" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Study Abroad Visas</a>
                 <a href="/visa/work-business" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Work & Business Visas</a>
                 <a href="/visa/travel-tourism" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Travel & Tourism</a>

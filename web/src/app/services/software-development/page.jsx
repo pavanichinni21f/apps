@@ -18,12 +18,53 @@ import {
   Mail,
   Star,
   Layers,
-  Cloud
+  Cloud,
+  X,
+  User,
+  Building,
+  Calendar,
+  FileText,
+  Download
 } from 'lucide-react';
 
 export default function SoftwareDevelopmentPage() {
   const { darkMode, setDarkMode } = useDarkMode();
   const [activeSection, setActiveSection] = useState('overview');
+  
+  // Modal states
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [showPortfolioModal, setShowPortfolioModal] = useState(false);
+  const [showCallModal, setShowCallModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  
+  // Form data states
+  const [projectFormData, setProjectFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    projectType: '',
+    budget: '',
+    timeline: '',
+    description: ''
+  });
+  
+  const [callFormData, setCallFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    preferredDate: '',
+    preferredTime: '',
+    projectDetails: ''
+  });
+  
+  const [messageFormData, setMessageFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    subject: '',
+    message: ''
+  });
 
   const features = [
     {
@@ -57,6 +98,90 @@ export default function SoftwareDevelopmentPage() {
       description: "Optimize application performance for speed, efficiency, and user experience."
     }
   ];
+
+  // Modal handlers
+  const handleStartProject = () => setShowProjectModal(true);
+  const handleViewPortfolio = () => setShowPortfolioModal(true);
+  const handleScheduleCall = () => setShowCallModal(true);
+  const handleSendMessage = () => setShowMessageModal(true);
+  const closeModal = () => {
+    setShowProjectModal(false);
+    setShowPortfolioModal(false);
+    setShowCallModal(false);
+    setShowMessageModal(false);
+  };
+
+  // Form input handlers
+  const handleProjectInputChange = (e) => {
+    const { name, value } = e.target;
+    setProjectFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCallInputChange = (e) => {
+    const { name, value } = e.target;
+    setCallFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleMessageInputChange = (e) => {
+    const { name, value } = e.target;
+    setMessageFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Form submission handlers
+  const handleProjectSubmit = (e) => {
+    e.preventDefault();
+    console.log('Project form submitted:', projectFormData);
+    // Reset form
+    setProjectFormData({
+      name: '',
+      email: '',
+      company: '',
+      phone: '',
+      projectType: '',
+      budget: '',
+      timeline: '',
+      description: ''
+    });
+    closeModal();
+    alert('Thank you! We\'ll contact you soon to discuss your project.');
+  };
+
+  const handleCallSubmit = (e) => {
+    e.preventDefault();
+    console.log('Call form submitted:', callFormData);
+    // Reset form
+    setCallFormData({
+      name: '',
+      email: '',
+      phone: '',
+      preferredDate: '',
+      preferredTime: '',
+      projectDetails: ''
+    });
+    closeModal();
+    alert('Thank you! We\'ll schedule a call at your preferred time.');
+  };
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    console.log('Message form submitted:', messageFormData);
+    // Reset form
+    setMessageFormData({
+      name: '',
+      email: '',
+      company: '',
+      subject: '',
+      message: ''
+    });
+    closeModal();
+    alert('Thank you! We\'ll get back to you soon.');
+  };
+
+  const handlePortfolioDownload = () => {
+    console.log('Portfolio download initiated');
+    closeModal();
+    alert('Portfolio download started!');
+  };
 
   const technologies = [
     "React & Next.js",
@@ -151,13 +276,19 @@ export default function SoftwareDevelopmentPage() {
               that drive business growth and deliver exceptional user experiences.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
+              <button 
+                onClick={handleStartProject}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
+              >
                 Start Your Project
                 <ArrowRight className="ml-2 w-5 h-5" />
               </button>
-              <button className={`border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors ${
-                darkMode ? 'hover:text-white' : ''
-              }`}>
+              <button 
+                onClick={handleViewPortfolio}
+                className={`border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors ${
+                  darkMode ? 'hover:text-white' : ''
+                }`}
+              >
                 View Portfolio
               </button>
             </div>
@@ -356,19 +487,475 @@ export default function SoftwareDevelopmentPage() {
             Let's discuss your software development needs and create something amazing together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
+            <button 
+              onClick={handleScheduleCall}
+              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
+            >
               <Phone className="mr-2 w-5 h-5" />
               Schedule a Call
             </button>
-            <button className={`border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center ${
-              darkMode ? 'hover:text-white' : ''
-            }`}>
+            <button 
+              onClick={handleSendMessage}
+              className={`border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center ${
+                darkMode ? 'hover:text-white' : ''
+              }`}
+            >
               <Mail className="mr-2 w-5 h-5" />
               Send Message
             </button>
           </div>
         </div>
       </section>
+
+      {/* Start Project Modal */}
+      {showProjectModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Start Your Project</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleProjectSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={projectFormData.name}
+                      onChange={handleProjectInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={projectFormData.email}
+                      onChange={handleProjectInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="company"
+                      value={projectFormData.company}
+                      onChange={handleProjectInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={projectFormData.phone}
+                      onChange={handleProjectInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Project Type</label>
+                  <select
+                    name="projectType"
+                    value={projectFormData.projectType}
+                    onChange={handleProjectInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select project type</option>
+                    <option value="web">Web Application</option>
+                    <option value="mobile">Mobile App</option>
+                    <option value="desktop">Desktop Software</option>
+                    <option value="api">API Development</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Budget Range</label>
+                  <select
+                    name="budget"
+                    value={projectFormData.budget}
+                    onChange={handleProjectInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select budget range</option>
+                    <option value="5k-15k">$5,000 - $15,000</option>
+                    <option value="15k-50k">$15,000 - $50,000</option>
+                    <option value="50k-100k">$50,000 - $100,000</option>
+                    <option value="100k+">$100,000+</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Timeline</label>
+                  <select
+                    name="timeline"
+                    value={projectFormData.timeline}
+                    onChange={handleProjectInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select timeline</option>
+                    <option value="1-3months">1-3 months</option>
+                    <option value="3-6months">3-6 months</option>
+                    <option value="6-12months">6-12 months</option>
+                    <option value="12months+">12+ months</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Project Description</label>
+                  <textarea
+                    name="description"
+                    value={projectFormData.description}
+                    onChange={handleProjectInputChange}
+                    rows={4}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="Tell us about your project requirements..."
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Start Project
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* View Portfolio Modal */}
+      {showPortfolioModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Portfolio Access</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="text-center">
+              <div className="mb-6">
+                <FileText className="w-16 h-16 text-orange-500 mx-auto mb-4" />
+                <h4 className="text-lg font-semibold mb-2">Download Our Portfolio</h4>
+                <p className={`text-sm ${
+                  darkMode ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  Get access to our complete portfolio showcasing our latest projects and case studies.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handlePortfolioDownload}
+                  className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all flex items-center justify-center"
+                >
+                  <Download className="mr-2 w-4 h-4" />
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Schedule Call Modal */}
+      {showCallModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Schedule a Call</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleCallSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={callFormData.name}
+                      onChange={handleCallInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={callFormData.email}
+                      onChange={handleCallInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone Number *</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={callFormData.phone}
+                      onChange={handleCallInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Preferred Date</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="date"
+                      name="preferredDate"
+                      value={callFormData.preferredDate}
+                      onChange={handleCallInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Preferred Time</label>
+                  <select
+                    name="preferredTime"
+                    value={callFormData.preferredTime}
+                    onChange={handleCallInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select preferred time</option>
+                    <option value="9am-12pm">9:00 AM - 12:00 PM</option>
+                    <option value="12pm-3pm">12:00 PM - 3:00 PM</option>
+                    <option value="3pm-6pm">3:00 PM - 6:00 PM</option>
+                    <option value="6pm-9pm">6:00 PM - 9:00 PM</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Project Details</label>
+                  <textarea
+                    name="projectDetails"
+                    value={callFormData.projectDetails}
+                    onChange={handleCallInputChange}
+                    rows={4}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="Brief description of what you'd like to discuss..."
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Schedule Call
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Send Message Modal */}
+      {showMessageModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Send Message</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleMessageSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={messageFormData.name}
+                      onChange={handleMessageInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={messageFormData.email}
+                      onChange={handleMessageInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="company"
+                      value={messageFormData.company}
+                      onChange={handleMessageInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Subject *</label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={messageFormData.subject}
+                    onChange={handleMessageInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="What's this about?"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Message *</label>
+                  <textarea
+                    name="message"
+                    value={messageFormData.message}
+                    onChange={handleMessageInputChange}
+                    rows={5}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="Tell us about your project or inquiry..."
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

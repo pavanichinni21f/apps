@@ -18,12 +18,53 @@ import {
   Mail,
   Star,
   PieChart,
-  LineChart
+  LineChart,
+  X,
+  User,
+  Building,
+  Calendar,
+  FileText,
+  Download
 } from 'lucide-react';
 
 export default function DataAnalyticsPage() {
   const { darkMode, setDarkMode } = useDarkMode();
   const [activeSection, setActiveSection] = useState('overview');
+  
+  // Modal states
+  const [showJourneyModal, setShowJourneyModal] = useState(false);
+  const [showCaseStudyModal, setShowCaseStudyModal] = useState(false);
+  const [showConsultationModal, setShowConsultationModal] = useState(false);
+  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+  
+  // Form data states
+  const [journeyFormData, setJourneyFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    dataGoals: '',
+    currentChallenges: ''
+  });
+  
+  const [consultationFormData, setConsultationFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    preferredDate: '',
+    analyticsNeeds: ''
+  });
+  
+  const [assessmentFormData, setAssessmentFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    dataVolume: '',
+    currentTools: '',
+    assessmentGoals: ''
+  });
 
   const features = [
     {
@@ -57,6 +98,91 @@ export default function DataAnalyticsPage() {
       description: "Monitor and optimize business performance with real-time analytics and KPI tracking."
     }
   ];
+
+  // Modal handlers
+  const handleStartJourney = () => setShowJourneyModal(true);
+  const handleViewCaseStudies = () => setShowCaseStudyModal(true);
+  const handleScheduleConsultation = () => setShowConsultationModal(true);
+  const handleRequestAssessment = () => setShowAssessmentModal(true);
+
+  const closeModal = () => {
+    setShowJourneyModal(false);
+    setShowCaseStudyModal(false);
+    setShowConsultationModal(false);
+    setShowAssessmentModal(false);
+  };
+
+  // Form handlers
+  const handleJourneyInputChange = (e) => {
+    const { name, value } = e.target;
+    setJourneyFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleConsultationInputChange = (e) => {
+    const { name, value } = e.target;
+    setConsultationFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAssessmentInputChange = (e) => {
+    const { name, value } = e.target;
+    setAssessmentFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleJourneySubmit = (e) => {
+    e.preventDefault();
+    console.log('Journey form submitted:', journeyFormData);
+    // Reset form
+    setJourneyFormData({
+      name: '',
+      email: '',
+      company: '',
+      phone: '',
+      dataGoals: '',
+      currentChallenges: ''
+    });
+    closeModal();
+    alert('Thank you! We\'ll contact you soon to start your analytics journey.');
+  };
+
+  const handleConsultationSubmit = (e) => {
+    e.preventDefault();
+    console.log('Consultation form submitted:', consultationFormData);
+    // Reset form
+    setConsultationFormData({
+      name: '',
+      email: '',
+      company: '',
+      phone: '',
+      preferredDate: '',
+      analyticsNeeds: ''
+    });
+    closeModal();
+    alert('Thank you! Your consultation has been scheduled.');
+  };
+
+  const handleAssessmentSubmit = (e) => {
+    e.preventDefault();
+    console.log('Assessment form submitted:', assessmentFormData);
+    // Reset form
+    setAssessmentFormData({
+      name: '',
+      email: '',
+      company: '',
+      phone: '',
+      dataVolume: '',
+      currentTools: '',
+      assessmentGoals: ''
+    });
+    closeModal();
+    alert('Thank you! We\'ll prepare your data assessment report.');
+  };
+
+  const handleCaseStudyDownload = () => {
+    // Simulate case study download
+    console.log('Downloading case studies...');
+    closeModal();
+    alert('Case studies downloaded successfully!');
+  };
 
   const analyticsProcess = [
     {
@@ -201,13 +327,19 @@ export default function DataAnalyticsPage() {
               Turn information into insights and insights into competitive advantage.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center">
+              <button 
+                onClick={handleStartJourney}
+                className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center"
+              >
                 Start Your Analytics Journey
                 <ArrowRight className="ml-2 w-5 h-5" />
               </button>
-              <button className={`border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors ${
-                darkMode ? 'hover:text-white' : ''
-              }`}>
+              <button 
+                onClick={handleViewCaseStudies}
+                className={`border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors ${
+                  darkMode ? 'hover:text-white' : ''
+                }`}
+              >
                 View Case Studies
               </button>
             </div>
@@ -478,19 +610,487 @@ export default function DataAnalyticsPage() {
             Let's discuss your data analytics needs and turn your information into competitive advantage.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center">
+            <button 
+              onClick={handleScheduleConsultation}
+              className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center"
+            >
               <Phone className="mr-2 w-5 h-5" />
               Schedule Analytics Consultation
             </button>
-            <button className={`border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center ${
-              darkMode ? 'hover:text-white' : ''
-            }`}>
+            <button 
+              onClick={handleRequestAssessment}
+              className={`border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center ${
+                darkMode ? 'hover:text-white' : ''
+              }`}
+            >
               <Mail className="mr-2 w-5 h-5" />
               Request Data Assessment
             </button>
           </div>
         </div>
       </section>
+
+      {/* Start Analytics Journey Modal */}
+      {showJourneyModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Start Your Analytics Journey</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleJourneySubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={journeyFormData.name}
+                      onChange={handleJourneyInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={journeyFormData.email}
+                      onChange={handleJourneyInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="company"
+                      value={journeyFormData.company}
+                      onChange={handleJourneyInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={journeyFormData.phone}
+                      onChange={handleJourneyInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Data Goals</label>
+                  <textarea
+                    name="dataGoals"
+                    value={journeyFormData.dataGoals}
+                    onChange={handleJourneyInputChange}
+                    rows={3}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="What do you hope to achieve with data analytics?"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Current Challenges</label>
+                  <textarea
+                    name="currentChallenges"
+                    value={journeyFormData.currentChallenges}
+                    onChange={handleJourneyInputChange}
+                    rows={3}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="What data challenges are you currently facing?"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Start Journey
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* View Case Studies Modal */}
+      {showCaseStudyModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-2xl w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Analytics Case Studies</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="space-y-6">
+              <p className={`text-sm ${
+                darkMode ? 'text-gray-300' : 'text-gray-600'
+              }`}>
+                Explore our detailed case studies showcasing real-world analytics implementations and their business impact.
+              </p>
+              
+              <div className="grid gap-4">
+                {caseStudies.map((study, index) => (
+                  <div key={index} className={`p-4 rounded-lg border ${
+                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'
+                  }`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-semibold">{study.company}</h4>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'
+                      }`}>
+                        {study.industry}
+                      </span>
+                    </div>
+                    <p className={`text-sm mb-2 ${
+                      darkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                      <strong className="text-green-500">Result:</strong> {study.result}
+                    </p>
+                    <p className={`text-xs ${
+                      darkMode ? 'text-gray-400' : 'text-gray-500'
+                    }`}>
+                      Duration: {study.duration}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Close
+                </button>
+                <button
+                  onClick={handleCaseStudyDownload}
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg font-medium transition-all flex items-center justify-center"
+                >
+                  <Download className="mr-2 w-4 h-4" />
+                  Download PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Schedule Consultation Modal */}
+      {showConsultationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Schedule Analytics Consultation</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleConsultationSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={consultationFormData.name}
+                      onChange={handleConsultationInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={consultationFormData.email}
+                      onChange={handleConsultationInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="company"
+                      value={consultationFormData.company}
+                      onChange={handleConsultationInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={consultationFormData.phone}
+                      onChange={handleConsultationInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Preferred Date</label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="date"
+                      name="preferredDate"
+                      value={consultationFormData.preferredDate}
+                      onChange={handleConsultationInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Analytics Needs</label>
+                  <textarea
+                    name="analyticsNeeds"
+                    value={consultationFormData.analyticsNeeds}
+                    onChange={handleConsultationInputChange}
+                    rows={4}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="Tell us about your analytics requirements and goals..."
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Schedule Consultation
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Request Assessment Modal */}
+      {showAssessmentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-lg p-6 max-h-[90vh] overflow-y-auto ${
+            darkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Request Data Assessment</h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleAssessmentSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={assessmentFormData.name}
+                      onChange={handleAssessmentInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email Address *</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={assessmentFormData.email}
+                      onChange={handleAssessmentInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="company"
+                      value={assessmentFormData.company}
+                      onChange={handleAssessmentInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={assessmentFormData.phone}
+                      onChange={handleAssessmentInputChange}
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                      }`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Data Volume</label>
+                  <select
+                    name="dataVolume"
+                    value={assessmentFormData.dataVolume}
+                    onChange={handleAssessmentInputChange}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                  >
+                    <option value="">Select data volume</option>
+                    <option value="small">Small (&lt; 1GB)</option>
+                    <option value="medium">Medium (1GB - 100GB)</option>
+                    <option value="large">Large (100GB - 1TB)</option>
+                    <option value="enterprise">Enterprise (&gt; 1TB)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Current Tools</label>
+                  <textarea
+                    name="currentTools"
+                    value={assessmentFormData.currentTools}
+                    onChange={handleAssessmentInputChange}
+                    rows={3}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="What analytics tools are you currently using?"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Assessment Goals</label>
+                  <textarea
+                    name="assessmentGoals"
+                    value={assessmentFormData.assessmentGoals}
+                    onChange={handleAssessmentInputChange}
+                    rows={3}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'
+                    }`}
+                    placeholder="What do you want to learn from this assessment?"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className={`flex-1 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                    darkMode ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg font-medium transition-all"
+                >
+                  Request Assessment
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

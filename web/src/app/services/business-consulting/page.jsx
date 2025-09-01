@@ -4,7 +4,6 @@ import { useState } from 'react';
 import NavigationBar from '../../../components/HomePage/NavigationBar';
 import { useDarkMode } from '../../../hooks/useDarkMode';
 import { 
-  ArrowRight, 
   CheckCircle, 
   Users, 
   TrendingUp, 
@@ -14,12 +13,43 @@ import {
   Award,
   Phone,
   Mail,
-  Star
+  Star,
+  X,
+  Calendar,
+  Download
 } from 'lucide-react';
 
 export default function BusinessConsultingPage() {
   const { darkMode, setDarkMode } = useDarkMode();
   const [activeSection, setActiveSection] = useState('overview');
+  
+  // Lightbox states
+  const [showConsultationModal, setShowConsultationModal] = useState(false);
+  const [showCaseStudyModal, setShowCaseStudyModal] = useState(false);
+  const [showRequestModal, setShowRequestModal] = useState(false);
+  
+  // Form data states
+  const [consultationFormData, setConsultationFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    company: '',
+    industry: '',
+    consultationType: '',
+    preferredTime: '',
+    message: ''
+  });
+  
+  const [requestFormData, setRequestFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    company: '',
+    serviceType: '',
+    budget: '',
+    timeline: '',
+    description: ''
+  });
 
   const features = [
     {
@@ -53,6 +83,78 @@ export default function BusinessConsultingPage() {
       description: "Implement quality management systems and best practices for operational excellence."
     }
   ];
+  
+  // Modal handlers
+  const handleScheduleConsultation = () => {
+    setShowConsultationModal(true);
+  };
+  
+  const handleDownloadCaseStudy = () => {
+    setShowCaseStudyModal(true);
+  };
+  
+  const handleRequestConsultation = () => {
+    setShowRequestModal(true);
+  };
+  
+  const closeAllModals = () => {
+    setShowConsultationModal(false);
+    setShowCaseStudyModal(false);
+    setShowRequestModal(false);
+  };
+  
+  // Form handlers
+  const handleConsultationFormChange = (e) => {
+    const { name, value } = e.target;
+    setConsultationFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleRequestFormChange = (e) => {
+    const { name, value } = e.target;
+    setRequestFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleConsultationFormSubmit = (e) => {
+    e.preventDefault();
+    console.log('Consultation form submitted:', consultationFormData);
+    // Handle form submission logic here
+    closeAllModals();
+    // Reset form
+    setConsultationFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      company: '',
+      industry: '',
+      consultationType: '',
+      preferredTime: '',
+      message: ''
+    });
+  };
+  
+  const handleRequestFormSubmit = (e) => {
+    e.preventDefault();
+    console.log('Request form submitted:', requestFormData);
+    // Handle form submission logic here
+    closeAllModals();
+    // Reset form
+    setRequestFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      company: '',
+      serviceType: '',
+      budget: '',
+      timeline: '',
+      description: ''
+    });
+  };
 
   const services = [
     "Business Strategy Development",
@@ -313,10 +415,16 @@ export default function BusinessConsultingPage() {
             Let's discuss how our business consulting services can help you achieve your goals
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button 
+              onClick={handleScheduleConsultation}
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
               Schedule Free Consultation
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+            <button 
+              onClick={handleDownloadCaseStudy}
+              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
+            >
               Download Case Study
             </button>
           </div>
@@ -361,7 +469,11 @@ export default function BusinessConsultingPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Business Challenge</label>
                   <textarea rows="4" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Describe your current business challenges and goals..."></textarea>
                 </div>
-                <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
+                <button 
+                  type="button"
+                  onClick={handleRequestConsultation}
+                  className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors"
+                >
                   Request Consultation
                 </button>
               </form>
@@ -410,6 +522,327 @@ export default function BusinessConsultingPage() {
           </div>
         </div>
       </footer>
+      
+      {/* Schedule Consultation Modal */}
+      {showConsultationModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-xl font-semibold text-gray-900">Schedule Free Consultation</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleConsultationFormSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={consultationFormData.fullName}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={consultationFormData.email}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={consultationFormData.phone}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={consultationFormData.company}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Industry</label>
+                <select
+                  name="industry"
+                  value={consultationFormData.industry}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Industry</option>
+                  <option value="technology">Technology</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="finance">Finance</option>
+                  <option value="retail">Retail</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Consultation Type</label>
+                <select
+                  name="consultationType"
+                  value={consultationFormData.consultationType}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Type</option>
+                  <option value="strategy">Business Strategy</option>
+                  <option value="operations">Operations Improvement</option>
+                  <option value="growth">Growth Planning</option>
+                  <option value="digital">Digital Transformation</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                <input
+                  type="datetime-local"
+                  name="preferredTime"
+                  value={consultationFormData.preferredTime}
+                  onChange={handleConsultationFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea
+                  name="message"
+                  value={consultationFormData.message}
+                  onChange={handleConsultationFormChange}
+                  rows="3"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Tell us about your business challenges..."
+                ></textarea>
+              </div>
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Schedule Consultation
+                </button>
+                <button
+                  type="button"
+                  onClick={closeAllModals}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      
+      {/* Download Case Study Modal */}
+      {showCaseStudyModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-xl font-semibold text-gray-900">Download Case Study</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="text-center mb-6">
+                <div className="bg-blue-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Download className="w-8 h-8 text-blue-600" />
+                </div>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Business Transformation Case Studies</h4>
+                <p className="text-gray-600 text-sm">Download our comprehensive case study collection showcasing real business transformations and measurable results.</p>
+              </div>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  15+ detailed case studies
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  ROI metrics and outcomes
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Implementation strategies
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Industry-specific insights
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    // Simulate download
+                    console.log('Downloading case study...');
+                    closeAllModals();
+                  }}
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download PDF
+                </button>
+                <button
+                  onClick={closeAllModals}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Request Consultation Modal */}
+      {showRequestModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-xl font-semibold text-gray-900">Request Consultation</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleRequestFormSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={requestFormData.fullName}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={requestFormData.email}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={requestFormData.phone}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={requestFormData.company}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Service Type</label>
+                <select
+                  name="serviceType"
+                  value={requestFormData.serviceType}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Service</option>
+                  <option value="strategy">Business Strategy</option>
+                  <option value="operations">Operations Consulting</option>
+                  <option value="growth">Growth Strategy</option>
+                  <option value="digital">Digital Transformation</option>
+                  <option value="financial">Financial Planning</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Budget Range</label>
+                <select
+                  name="budget"
+                  value={requestFormData.budget}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Budget</option>
+                  <option value="under-10k">Under $10,000</option>
+                  <option value="10k-25k">$10,000 - $25,000</option>
+                  <option value="25k-50k">$25,000 - $50,000</option>
+                  <option value="50k-100k">$50,000 - $100,000</option>
+                  <option value="over-100k">Over $100,000</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Timeline</label>
+                <select
+                  name="timeline"
+                  value={requestFormData.timeline}
+                  onChange={handleRequestFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select Timeline</option>
+                  <option value="immediate">Immediate (1-2 weeks)</option>
+                  <option value="short">Short-term (1-3 months)</option>
+                  <option value="medium">Medium-term (3-6 months)</option>
+                  <option value="long">Long-term (6+ months)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Project Description</label>
+                <textarea
+                  name="description"
+                  value={requestFormData.description}
+                  onChange={handleRequestFormChange}
+                  rows="4"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Describe your business challenges and goals..."
+                ></textarea>
+              </div>
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  Send Request
+                </button>
+                <button
+                  type="button"
+                  onClick={closeAllModals}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

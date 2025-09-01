@@ -42,7 +42,7 @@ async function startServer() {
           port: PORT
         }, (info) => {
           console.log(`✅ Server successfully running on http://localhost:${info.port}`);
-          console.log(`🌐 Access your app at: http://localhost:${info.port}`);
+          console.log(`🌐 Access your app at: http://localhost::${info.port}`);
         });
         
         // Keep the process alive

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import NavigationBar from '../../../components/HomePage/NavigationBar';
 import { useDarkMode } from '../../../hooks/useDarkMode';
-import { Briefcase, CheckCircle, FileText, Clock, ArrowRight, ChevronDown, ChevronUp, TrendingUp, Building, Users, Star, CheckSquare } from 'lucide-react';
+import { Briefcase, CheckCircle, ArrowRight, ChevronDown, ChevronUp, Building, Users, Star, CheckSquare } from 'lucide-react';
 
 export default function WorkBusinessVisaPage() {
   const { darkMode, setDarkMode } = useDarkMode();

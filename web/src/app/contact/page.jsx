@@ -11,14 +11,11 @@ import {
   Clock, 
   Send, 
   MessageSquare, 
-  Users, 
-  Globe,
   CheckCircle,
-  ArrowRight,
   Calendar,
   Headphones,
   Building,
-  User
+  X
 } from 'lucide-react';
 
 export default function ContactPage() {
@@ -34,6 +31,34 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  
+  // Modal states
+  const [showCallModal, setShowCallModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  
+  // Modal form states
+  const [emailFormData, setEmailFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [chatFormData, setChatFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [bookingFormData, setBookingFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    preferredDate: '',
+    preferredTime: '',
+    message: ''
+  });
 
   const contactMethods = [
     {
@@ -133,6 +158,69 @@ export default function ContactPage() {
     }, 2000);
   };
 
+  // Modal handlers
+  const handleCallNow = () => {
+    setShowCallModal(true);
+  };
+
+  const handleSendEmail = () => {
+    setShowEmailModal(true);
+  };
+
+  const handleStartChat = () => {
+    setShowChatModal(true);
+  };
+
+  const handleBookNow = () => {
+    setShowBookingModal(true);
+  };
+
+  const handleEmailFormChange = (e) => {
+    const { name, value } = e.target;
+    setEmailFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleChatFormChange = (e) => {
+    const { name, value } = e.target;
+    setChatFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleBookingFormChange = (e) => {
+    const { name, value } = e.target;
+    setBookingFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    // Handle email form submission
+    console.log('Email form submitted:', emailFormData);
+    setShowEmailModal(false);
+    setEmailFormData({ name: '', email: '', subject: '', message: '' });
+  };
+
+  const handleChatSubmit = (e) => {
+    e.preventDefault();
+    // Handle chat form submission
+    console.log('Chat form submitted:', chatFormData);
+    setShowChatModal(false);
+    setChatFormData({ name: '', email: '', message: '' });
+  };
+
+  const handleBookingSubmit = (e) => {
+    e.preventDefault();
+    // Handle booking form submission
+    console.log('Booking form submitted:', bookingFormData);
+    setShowBookingModal(false);
+    setBookingFormData({ name: '', email: '', phone: '', service: '', preferredDate: '', preferredTime: '', message: '' });
+  };
+
+  const closeAllModals = () => {
+    setShowCallModal(false);
+    setShowEmailModal(false);
+    setShowChatModal(false);
+    setShowBookingModal(false);
+  };
+
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
       darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
@@ -201,7 +289,15 @@ export default function ContactPage() {
                 }`}>
                   {method.availability}
                 </div>
-                <button className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
+                <button 
+                  onClick={() => {
+                    if (method.action === 'Call Now') handleCallNow();
+                    else if (method.action === 'Send Email') handleSendEmail();
+                    else if (method.action === 'Start Chat') handleStartChat();
+                    else if (method.action === 'Book Now') handleBookNow();
+                  }}
+                  className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                >
                   {method.action}
                 </button>
               </div>
@@ -544,6 +640,328 @@ export default function ContactPage() {
       </section>
 
       <Footer />
+      
+      {/* Call Now Modal */}
+      {showCallModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Call Us Now</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div className="text-center">
+                <Phone className="w-12 h-12 text-blue-500 mx-auto mb-4" />
+                <h4 className="text-lg font-semibold mb-2">Ready to talk?</h4>
+                <p className={`mb-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Call us directly for immediate assistance
+                </p>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="font-medium">New York Office</span>
+                  <a href="tel:+15551234567" className="text-blue-600 font-semibold hover:underline">
+                    +1 (555) 123-4567
+                  </a>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="font-medium">San Francisco Office</span>
+                  <a href="tel:+15559876543" className="text-blue-600 font-semibold hover:underline">
+                    +1 (555) 987-6543
+                  </a>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="font-medium">London Office</span>
+                  <a href="tel:+442071234567" className="text-blue-600 font-semibold hover:underline">
+                    +44 20 7123 4567
+                  </a>
+                </div>
+              </div>
+              <div className={`text-sm text-center ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                Available Mon-Fri, 9AM-6PM EST
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Send Email Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Send Email</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={emailFormData.name}
+                  onChange={handleEmailFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={emailFormData.email}
+                  onChange={handleEmailFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Subject</label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={emailFormData.subject}
+                  onChange={handleEmailFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Message</label>
+                <textarea
+                  name="message"
+                  value={emailFormData.message}
+                  onChange={handleEmailFormChange}
+                  rows={4}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={closeAllModals}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Email
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Start Chat Modal */}
+      {showChatModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Start Live Chat</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleChatSubmit} className="space-y-4">
+              <div className="text-center mb-4">
+                <MessageSquare className="w-12 h-12 text-green-500 mx-auto mb-2" />
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Connect with our support team instantly
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={chatFormData.name}
+                  onChange={handleChatFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={chatFormData.email}
+                  onChange={handleChatFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">How can we help?</label>
+                <textarea
+                  name="message"
+                  value={chatFormData.message}
+                  onChange={handleChatFormChange}
+                  rows={3}
+                  placeholder="Describe your question or issue..."
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={closeAllModals}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Start Chat
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Book Now Modal */}
+      {showBookingModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className={`max-w-md w-full rounded-xl p-6 max-h-[90vh] overflow-y-auto ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Book Appointment</h3>
+              <button onClick={closeAllModals} className="text-gray-400 hover:text-gray-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleBookingSubmit} className="space-y-4">
+              <div className="text-center mb-4">
+                <Calendar className="w-12 h-12 text-purple-500 mx-auto mb-2" />
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Schedule a consultation with our experts
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={bookingFormData.name}
+                  onChange={handleBookingFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={bookingFormData.email}
+                  onChange={handleBookingFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={bookingFormData.phone}
+                  onChange={handleBookingFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Service</label>
+                <select
+                  name="service"
+                  value={bookingFormData.service}
+                  onChange={handleBookingFormChange}
+                  required
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                >
+                  <option value="">Select a service</option>
+                  {services.map((service, index) => (
+                    <option key={index} value={service}>{service}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Preferred Date</label>
+                  <input
+                    type="date"
+                    name="preferredDate"
+                    value={bookingFormData.preferredDate}
+                    onChange={handleBookingFormChange}
+                    required
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Preferred Time</label>
+                  <select
+                    name="preferredTime"
+                    value={bookingFormData.preferredTime}
+                    onChange={handleBookingFormChange}
+                    required
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                  >
+                    <option value="">Select time</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Message</label>
+                <textarea
+                  name="message"
+                  value={bookingFormData.message}
+                  onChange={handleBookingFormChange}
+                  rows={3}
+                  placeholder="Tell us about your needs or any specific requirements..."
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300'}`}
+                />
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={closeAllModals}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Book Now
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

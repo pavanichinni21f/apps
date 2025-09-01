@@ -1,4 +1,4 @@
-import { ArrowRight, Play, CheckSquare, ChevronLeft, ChevronRight, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Play, ChevronLeft, ChevronRight, Sparkles, Zap } from "lucide-react";
 import { useTypewriter } from "../../hooks/useTypewriter";
 import { stats } from "../../data/stats";
 import { useState, useEffect } from "react";

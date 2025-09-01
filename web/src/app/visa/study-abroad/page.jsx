@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { GraduationCap, CheckCircle, FileText, Clock, ArrowRight, ChevronDown, ChevronUp, Users, Globe, BookOpen, Award, CheckSquare } from 'lucide-react';
+import { GraduationCap, CheckCircle, FileText, ArrowRight, ChevronDown, ChevronUp, Users, Award } from 'lucide-react';
 import NavigationBar from '../../../components/HomePage/NavigationBar';
 import Footer from '../../../components/HomePage/Footer';
 
