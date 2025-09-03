@@ -1,0 +1,124 @@
+name: Deploy Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0
+  workflow_dispatch:  # Allows manual triggering
+    inputs:
+      version:
+        description: 'Version tag for the release'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        
+    - name: Install root dependencies
+      run: npm install
+      
+    - name: Install web dependencies
+      working-directory: ./web
+      run: npm ci --legacy-peer-deps
+      
+    - name: Install mobile dependencies
+      working-directory: ./mobile
+      run: npm ci
+      
+    - name: Build production version
+      run: |
+        chmod +x build-production.js
+        node build-production.js
+        
+    - name: Create deployment package
+      run: |
+        cd production
+        # Create comprehensive deployment package
+        zip -r signinsoft-production-${{ github.ref_name }}.zip .
+        
+    - name: Generate release notes
+      id: release_notes
+      run: |
+        echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+        echo "# SignInSoft Production Release ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "## 📦 What's Included" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Web Application" >> $GITHUB_OUTPUT
+        echo "- ✅ Backend API server (Node.js/Express)" >> $GITHUB_OUTPUT
+        echo "- ✅ Frontend build files (React)" >> $GITHUB_OUTPUT
+        echo "- ✅ Database schema files" >> $GITHUB_OUTPUT
+        echo "- ✅ Configuration files" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Mobile Application" >> $GITHUB_OUTPUT
+        echo "- ✅ React Native/Expo source code" >> $GITHUB_OUTPUT
+        echo "- ✅ Build configurations for iOS and Android" >> $GITHUB_OUTPUT
+        echo "- ✅ Configuration files" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "## 🚀 Deployment Instructions" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Quick Deploy to cPanel" >> $GITHUB_OUTPUT
+        echo "1. Download the production package" >> $GITHUB_OUTPUT
+        echo "2. Extract to your cPanel File Manager" >> $GITHUB_OUTPUT
+        echo "3. Follow the included README.md for detailed steps" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Manual Deployment" >> $GITHUB_OUTPUT
+        echo "- See DEPLOYMENT.md for comprehensive instructions" >> $GITHUB_OUTPUT
+        echo "- Use the included deployment scripts for automation" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "## 📋 Files in This Release" >> $GITHUB_OUTPUT
+        echo "- \`signinsoft-production-${{ github.ref_name }}.zip\` - Complete production package" >> $GITHUB_OUTPUT
+        echo "- \`web.zip\` - Web application only" >> $GITHUB_OUTPUT
+        echo "- \`mobile.zip\` - Mobile application only" >> $GITHUB_OUTPUT
+        echo "- \`README.md\` - Deployment instructions" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "Built on: $(date)" >> $GITHUB_OUTPUT
+        echo "Commit: ${{ github.sha }}" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: SignInSoft Production ${{ github.ref_name }}
+        body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
+        draft: false
+        prerelease: false
+        files: |
+          production/signinsoft-production-${{ github.ref_name }}.zip
+          production/web.zip
+          production/mobile.zip
+          production/README.md
+          DEPLOYMENT.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload production artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-build-${{ github.ref_name }}
+        path: production/
+        retention-days: 90
+        
+    - name: Deployment Summary
+      run: |
+        echo "🎉 Production deployment completed successfully!"
+        echo "📦 Release: ${{ github.ref_name }}"
+        echo "🔗 Release URL: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+        echo "📁 Artifacts uploaded to GitHub Actions"
+        echo ""
+        echo "Next steps:"
+        echo "1. Download the production package from the release"
+        echo "2. Follow deployment instructions in README.md"
+        echo "3. Use the automated deployment scripts if available"

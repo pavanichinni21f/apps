@@ -15,17 +15,17 @@ const execAsync = promisify(exec);
 // Configuration
 const config = {
     cpanel: {
-        host: 'gsgroups.net',
+        host: 's3741.bom1.stableserver.net',
         port: 2083,
-        username: 'hjqssnag',
+        username: 'signinsoft.app',
         password: process.env.CPANEL_PASSWORD || 'your_cpanel_password',
-        domain: 'signinsoft1.gsgroups.net',
-        deployPath: '/home/hjqssnag/signinsoft1.gsgroups.net'
+        domain: 'signinsoft.app',
+        deployPath: '/public_html'
     },
     database: {
-        name: 'hjqssnag_signinsoft',
-        user: 'hjqssnag_signinsoft',
-        password: 'SignIn@2024'
+        name: 'signinsoft_main',
+        user: 'signinsoft_user',
+        password: 'SignInSoft2024!DB'
     }
 };
 

@@ -15,8 +15,8 @@ NC='\033[0m' # No Color
 # Configuration
 CPANEL_HOST="gsgroups.net:2083"
 CPANEL_USER="hjqssnag"
-DOMAIN="signinsoft1.gsgroups.net"
-DEPLOY_PATH="/home/hjqssnag/signinsoft1.gsgroups.net"
+DOMAIN="signinsoft.app"
+DEPLOY_PATH="/home/signinsoft.app/public_html"
 DB_NAME="hjqssnag_signinsoft"
 DB_USER="hjqssnag_signinsoft"
 DB_PASS="SignIn@2024"
