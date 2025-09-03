@@ -88,3 +88,26 @@ jobs:
         name: mobile-build
         path: mobile/dist/
         retention-days: 30
+
+  deployment-info:
+    runs-on: ubuntu-latest
+    needs: [build-web, build-docker, build-mobile]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Deployment Information
+      run: |
+        echo "🚀 Build completed successfully!"
+        echo ""
+        echo "📦 Artifacts created:"
+        echo "  - Web build artifacts"
+        echo "  - Docker image"
+        echo "  - Mobile build artifacts"
+        echo ""
+        echo "🏷️ To create a production release:"
+        echo "  1. Create a version tag: git tag v1.0.1"
+        echo "  2. Push the tag: git push origin v1.0.1"
+        echo "  3. This will trigger the production deployment workflow"
+        echo ""
+        echo "🔗 Or use the manual deployment workflow:"
+        echo "  - Go to Actions → Deploy Production → Run workflow"
