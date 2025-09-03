@@ -1,0 +1,10 @@
+{"environment":"development","level":"error","message":"Database connection failed:","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"warn","message":"Server will start but database operations will fail","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Created directory: uploads","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Created directory: uploads/profiles","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Created directory: uploads/resumes","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Created directory: uploads/documents","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"SignInSoft API Server running on port 3001","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Environment: development","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"Health check: http://localhost:3001/health","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}
+{"environment":"development","level":"info","message":"API Documentation: http://localhost:3001/api-docs","service":"signinsoft-api","timestamp":"2025-09-02 05:06:32","version":"1.0.0"}

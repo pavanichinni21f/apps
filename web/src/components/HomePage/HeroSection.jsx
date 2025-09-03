@@ -1,4 +1,4 @@
-import { ArrowRight, Play, ChevronLeft, ChevronRight, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Play, ChevronLeft, ChevronRight, Sparkles, Zap, X } from "lucide-react";
 import { useTypewriter } from "../../hooks/useTypewriter";
 import { stats } from "../../data/stats";
 import { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 export default function HeroSection() {
   const typedText = useTypewriter();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showVideoModal, setShowVideoModal] = useState(false);
   
   const heroSlides = [
     {
@@ -134,7 +135,10 @@ export default function HeroSection() {
               <span>Get Started Free</span>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="group relative border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 backdrop-blur-sm transition-all duration-300 flex items-center hover:border-white/50 hover:shadow-lg">
+            <button 
+              onClick={() => setShowVideoModal(true)}
+              className="group relative border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 backdrop-blur-sm transition-all duration-300 flex items-center hover:border-white/50 hover:shadow-lg"
+            >
               <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               Watch Demo
             </button>
@@ -160,6 +164,40 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Video Lightbox Modal */}
+      {showVideoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl mx-4">
+            {/* Close Button */}
+            <button
+              onClick={() => setShowVideoModal(false)}
+              className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            
+            {/* Video Container */}
+            <div className="relative bg-black rounded-lg overflow-hidden shadow-2xl">
+              <video
+                controls
+                autoPlay
+                className="w-full h-auto max-h-[80vh]"
+                poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1926&q=80"
+              >
+                <source src="https://signinsoft.net/static/media/signin%20.ebb098133d1187093543.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          
+          {/* Click outside to close */}
+          <div 
+            className="absolute inset-0 -z-10" 
+            onClick={() => setShowVideoModal(false)}
+          ></div>
+        </div>
+      )}
     </section>
   );
 }

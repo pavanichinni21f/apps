@@ -1,11 +1,16 @@
-import { CheckSquare, Sun, Moon, Menu, X, ChevronDown, User, Calendar, LogIn } from "lucide-react";
+import { CheckSquare, Sun, Moon, Menu, X, ChevronDown, User, Calendar, LogIn, LogOut } from "lucide-react";
 import { useState } from "react";
 import TopHeader from "./TopHeader";
 import { useDarkMode } from "../../hooks/useDarkMode";
+import { useUser } from "../../utils/useUser";
+import useAuth from "../../utils/useAuth";
 
 export default function NavigationBar({ showTopHeader = true }) {
   const { darkMode, toggleDarkMode, isLoading } = useDarkMode();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, loading } = useUser();
+  const { signOut } = useAuth();
+  const isAuthenticated = !!user;
 
   return (
     <>
@@ -58,7 +63,8 @@ export default function NavigationBar({ showTopHeader = true }) {
                     <a href="/services/business-consulting" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Business Consulting</a>
                     <a href="/services/employment-consulting" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Employment Consulting</a>
                     <a href="/services/software-development" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Software Development</a>
-                    <a href="/services/ux-design" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">UI/UX Design</a>
+                    <a href="/services/ui-ux-design" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">UI/UX Design</a>
+                    <a href="/services/it-consulting" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">IT Consulting</a>
                     <a href="/services/cybersecurity" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Cybersecurity</a>
                     <a href="/services/data-analytics" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Data & Analytics</a>
                   </div>
@@ -76,8 +82,8 @@ export default function NavigationBar({ showTopHeader = true }) {
                     <a href="/visa/study-abroad" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Study Abroad Visas</a>
                     <a href="/visa/work-business" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Work & Business Visas</a>
                     <a href="/visa/travel-tourism" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Travel & Tourism</a>
-                    <a href="/visa/extension-renewal" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Extension & Renewal</a>
-                    <a href="/visa/document-verification" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Document Verification</a>
+                    <a href="/extension-renewal" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Extension & Renewal</a>
+                    <a href="/visa/immigration-consultation" className="block px-4 py-2 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">Immigration Consultation</a>
                   </div>
                 </div>
               </div>
@@ -120,14 +126,26 @@ export default function NavigationBar({ showTopHeader = true }) {
                 </button>
                 <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200 dark:border-gray-700">
                   <div className="py-2">
-                    <a href="/signin" className="flex items-center space-x-3 px-4 py-3 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                      <LogIn className="w-4 h-4" />
-                      <span>Sign In</span>
-                    </a>
-                    <a href="/dashboard" className="flex items-center space-x-3 px-4 py-3 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                      <User className="w-4 h-4" />
-                      <span>Dashboard</span>
-                    </a>
+                    {!isAuthenticated ? (
+                      <a href="/signin" className="flex items-center space-x-3 px-4 py-3 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <LogIn className="w-4 h-4" />
+                        <span>Sign In</span>
+                      </a>
+                    ) : (
+                      <>
+                        <a href="/dashboard" className="flex items-center space-x-3 px-4 py-3 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                          <User className="w-4 h-4" />
+                          <span>Dashboard</span>
+                        </a>
+                        <button 
+                          onClick={() => signOut()}
+                          className="flex items-center space-x-3 px-4 py-3 text-sm text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors w-full text-left"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Sign Out</span>
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -151,22 +169,37 @@ export default function NavigationBar({ showTopHeader = true }) {
                 <a href="/services/business-consulting" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Business Consulting</a>
                 <a href="/services/employment-consulting" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Employment Consulting</a>
                 <a href="/services/software-development" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Software Development</a>
-                <a href="/services/ux-design" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">UI/UX Design</a>
+                <a href="/services/ui-ux-design" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">UI/UX Design</a>
+                <a href="/services/it-consulting" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">IT Consulting</a>
                 <a href="/services/cybersecurity" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Cybersecurity</a>
                 <a href="/services/data-analytics" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Data & Analytics</a>
                 <a href="/visa/study-abroad" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Study Abroad Visas</a>
                 <a href="/visa/work-business" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Work & Business Visas</a>
                 <a href="/visa/travel-tourism" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Travel & Tourism</a>
+                <a href="/extension-renewal" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Extension & Renewal</a>
+                <a href="/visa/immigration-consultation" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Immigration Consultation</a>
                 <a href="/contact" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Contact</a>
                 <a href="/blog" className="block px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">Blog</a>
-                <a href="/signin" className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">
-                  <LogIn className="w-4 h-4" />
-                  <span>Sign In</span>
-                </a>
-                <a href="/dashboard" className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">
-                  <User className="w-4 h-4" />
-                  <span>Dashboard</span>
-                </a>
+                {!isAuthenticated ? (
+                  <a href="/signin" className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">
+                    <LogIn className="w-4 h-4" />
+                    <span>Sign In</span>
+                  </a>
+                ) : (
+                  <>
+                    <a href="/dashboard" className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400">
+                      <User className="w-4 h-4" />
+                      <span>Dashboard</span>
+                    </a>
+                    <button 
+                      onClick={() => signOut()}
+                      className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-blue-900 dark:text-white hover:text-orange-500 dark:hover:text-orange-400 w-full text-left"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </>
+                )}
                 <a href="/book-appointment" className="flex items-center justify-center space-x-2 mx-3 my-2 px-4 py-3 text-base font-medium bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all duration-300">
                   <Calendar className="w-4 h-4" />
                 </a>
