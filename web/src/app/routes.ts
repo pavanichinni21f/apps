@@ -1,13 +1,31 @@
-import { readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import {
 	type RouteConfigEntry,
 	index,
 	route,
 } from '@react-router/dev/routes';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+// Server-side imports - only available in Node.js environment
+let readdirSync: any, statSync: any, join: any, fileURLToPath: any;
+let __dirname: string = '';
+
+// Initialize server-side modules
+if (typeof window === 'undefined') {
+	try {
+		// Dynamic imports for Node.js modules
+		const { readdirSync: fsReaddir, statSync: fsStat } = require('node:fs');
+		const { join: pathJoin } = require('node:path');
+		const { fileURLToPath: urlFileURLToPath } = require('node:url');
+		
+		readdirSync = fsReaddir;
+		statSync = fsStat;
+		join = pathJoin;
+		fileURLToPath = urlFileURLToPath;
+		__dirname = fileURLToPath(new URL('.', import.meta.url));
+	} catch (e) {
+		// Fallback if Node.js modules are not available
+		console.warn('Node.js modules not available:', e);
+	}
+}
 
 type Tree = {
 	path: string;
@@ -104,16 +122,37 @@ function generateRoutes(node: Tree): RouteConfigEntry[] {
 
 	return routes;
 }
-if (import.meta.env.DEV) {
-	import.meta.glob('./**/page.jsx', {});
-	if (import.meta.hot) {
-		import.meta.hot.accept((newSelf) => {
-			import.meta.hot?.invalidate();
-		});
+// HMR support for development
+if (typeof window === 'undefined') {
+	try {
+		// @ts-ignore - Vite HMR types
+		if (import.meta.env?.DEV) {
+			// @ts-ignore - Vite glob import
+			import.meta.glob('./**/page.jsx', {});
+			// @ts-ignore - Vite HMR
+			if (import.meta.hot) {
+				// @ts-ignore - Vite HMR
+				import.meta.hot.accept((newSelf) => {
+					// @ts-ignore - Vite HMR
+					import.meta.hot?.invalidate();
+				});
+			}
+		}
+	} catch (e) {
+		// Ignore HMR errors
 	}
 }
-const tree = buildRouteTree(__dirname);
-const notFound = route('*?', './__create/not-found.tsx');
-const routes = [...generateRoutes(tree), notFound];
+// Only build routes on server side
+let routes: RouteConfigEntry[];
+
+if (typeof window === 'undefined' && __dirname) {
+	const tree = buildRouteTree(__dirname);
+	const notFound = route('*?', './__create/not-found.tsx');
+	routes = [...generateRoutes(tree), notFound];
+} else {
+	// Fallback for client side - minimal routes
+	const notFound = route('*?', './__create/not-found.tsx');
+	routes = [notFound];
+}
 
 export default routes;

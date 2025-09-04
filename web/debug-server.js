@@ -1,12 +1,11 @@
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { serve } from '@hono/node-server';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 3000;
 
-console.log("🚀 Starting React Router v7 Hono production server...");
+console.log("🚀 Starting Debug React Router v7 Hono production server...");
 console.log("📁 Current directory:", process.cwd());
 console.log("🔧 Node version:", process.version);
 console.log("🌍 Environment:", process.env.NODE_ENV || 'development');
@@ -23,64 +22,69 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-// Set a timeout for the import to prevent hanging
-const importTimeout = setTimeout(() => {
-  console.error("💥 Server import timed out after 30 seconds");
-  console.error("🔍 This usually indicates a database connection issue");
-  console.error("🔧 Check your DATABASE_URL and network connectivity");
-  process.exit(1);
-}, 30000);
-
 async function startServer() {
   try {
     console.log("📦 Importing server build...");
-    console.log("⏱️  Import timeout set to 30 seconds");
     
-    // Import the built server with timeout protection
+    // Check if build directory exists
     const buildPath = join(process.cwd(), "build", "server", "index.js");
     console.log("🔍 Looking for server build at:", buildPath);
     
     const serverBuild = await import(buildPath);
-    clearTimeout(importTimeout);
-    
     console.log("✅ Server build imported successfully");
-    console.log("🔍 Available exports:", Object.keys(serverBuild));
+    console.log("🔍 Server build keys:", Object.keys(serverBuild));
+    console.log("🔍 Default export type:", typeof serverBuild.default);
     
     if (serverBuild.default) {
-      console.log("🎯 Found server export, starting Hono server...");
-      console.log("🔍 Default export type:", typeof serverBuild.default);
-      console.log("🔍 Has fetch method:", typeof serverBuild.default.fetch === 'function');
+      console.log("🔍 Default export properties:", Object.getOwnPropertyNames(serverBuild.default));
+      console.log("🔍 Default export prototype:", Object.getOwnPropertyNames(Object.getPrototypeOf(serverBuild.default)));
       
+      // Check if it has a fetch method (Hono app)
       if (typeof serverBuild.default.fetch === 'function') {
-        // The server build exports a Hono server created by createHonoServer
-        // We need to use @hono/node-server to serve it
+        console.log("🎯 Found Hono app with fetch method, starting server...");
+        
+        const { serve } = await import('@hono/node-server');
+        console.log("📡 Starting server on port", PORT);
+        
         const server = serve({
           fetch: serverBuild.default.fetch,
           port: PORT,
-          hostname: '0.0.0.0'
         });
         
-        console.log(`🎉 Server successfully running on http://0.0.0.0:${PORT}`);
+        console.log(`✅ Server successfully running on http://localhost:${PORT}`);
         console.log(`🌐 Access your app at: http://localhost:${PORT}`);
         
         // Handle graceful shutdown
-        const gracefulShutdown = () => {
-          console.log('📴 Received shutdown signal, shutting down gracefully');
+        process.on('SIGTERM', () => {
+          console.log('📴 Received SIGTERM, shutting down gracefully');
           server.close(() => {
-            console.log('✅ Server closed');
             process.exit(0);
           });
-        };
+        });
         
-        process.on('SIGTERM', gracefulShutdown);
-        process.on('SIGINT', gracefulShutdown);
-        
-      } else {
-        console.error("❌ Server default export doesn't have fetch method");
+      }
+      // Check if it has a listen method (direct server)
+      else if (typeof serverBuild.default.listen === 'function') {
+        console.log("🎯 Starting server with listen method...");
+        serverBuild.default.listen(PORT, () => {
+          console.log(`✅ Server successfully running on http://localhost:${PORT}`);
+          console.log(`🌐 Access your app at: http://localhost:${PORT}`);
+        });
+      }
+      else {
+        console.error("❌ Server build default export doesn't have fetch or listen method");
         console.log("🔍 Available methods:", Object.getOwnPropertyNames(serverBuild.default));
+        console.log("🔍 Prototype methods:", Object.getOwnPropertyNames(Object.getPrototypeOf(serverBuild.default)));
+        
+        // Try to call it directly if it's a function
+        if (typeof serverBuild.default === 'function') {
+          console.log("🔄 Trying to call default export as function...");
+          const result = await serverBuild.default();
+          console.log("🔍 Function result:", typeof result, result);
+        }
+        
         process.exit(1);
       }
-      
     } else {
       console.error("❌ No default export found in server build");
       console.log("🔍 Available exports:", Object.keys(serverBuild));
@@ -88,17 +92,11 @@ async function startServer() {
     }
     
   } catch (error) {
-    clearTimeout(importTimeout);
     console.error("💥 Failed to import or start server:");
     console.error("🏷️  Error name:", error.name);
     console.error("📝 Error message:", error.message);
     console.error("📚 Error stack:", error.stack);
     console.error("🔍 Error cause:", error.cause);
-    
-    if (error.message.includes('ECONNREFUSED') || error.message.includes('ENOTFOUND')) {
-      console.error("🔧 Database connection failed. Check your DATABASE_URL");
-    }
-    
     process.exit(1);
   }
 }
@@ -106,9 +104,19 @@ async function startServer() {
 // Start the server
 console.log("🚀 Calling startServer()...");
 startServer().catch((error) => {
-  clearTimeout(importTimeout);
   console.error("💥 StartServer failed:", error);
   process.exit(1);
 });
 
-console.log("🎬 Production server script loaded, waiting for async operations...");
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('📴 SIGTERM received, shutting down gracefully');
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('📴 SIGINT received, shutting down gracefully');
+  process.exit(0);
+});
+
+console.log("🎬 Debug server script loaded, waiting for async operations...");

@@ -19,6 +19,9 @@ COPY . .
 # Clean any existing build directory and build with timeout
 RUN rm -rf build && timeout 120 npm run build || echo "Build completed or timed out"
 
+# Change ownership of the app directory to node user
+RUN chown -R node:node /app
+
 # Switch to the node user (already exists in the base image)
 USER node
 
