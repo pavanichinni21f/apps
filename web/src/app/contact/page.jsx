@@ -63,17 +63,17 @@ export default function ContactPage() {
   const contactMethods = [
     {
       icon: <Phone className="w-8 h-8" />,
-      title: "Phone Support",
+      title: "Call Us",
       description: "Speak directly with our experts",
-      contact: "+1 (555) 123-4567",
+      contact: "+1(302) 703-1113",
       availability: "Mon-Fri, 9AM-6PM EST",
       action: "Call Now"
     },
     {
       icon: <Mail className="w-8 h-8" />,
-      title: "Email Support",
+      title: "Email Us",
       description: "Get detailed responses to your queries",
-      contact: "contact@signinsoft.com",
+      contact: "info@signinsoft.net",
       availability: "24/7 Response within 2 hours",
       action: "Send Email"
     },
@@ -97,25 +97,25 @@ export default function ContactPage() {
 
   const offices = [
     {
-      city: "New York",
-      address: "123 Business Ave, Suite 500\nNew York, NY 10001",
-      phone: "+1 (555) 123-4567",
-      email: "ny@signinsoft.com",
+      city: "USA",
+      address: "1553 Route 27, Room 1000-2\nSuite 1000, Somerset, NJ 08873",
+      phone: "+1(302) 703-1113",
+      email: "info@signinsoft.net",
       hours: "Mon-Fri: 9AM-6PM\nSat: 10AM-2PM"
     },
     {
-      city: "San Francisco",
-      address: "456 Tech Street, Floor 12\nSan Francisco, CA 94105",
-      phone: "+1 (555) 987-6543",
-      email: "sf@signinsoft.com",
-      hours: "Mon-Fri: 8AM-5PM\nSat: 9AM-1PM"
+      city: "India",
+      address: "Flat no.202, Sri Sai Goverdhan Kunj\nSR Nagar, Hyderabad-500038",
+      phone: "040 – 40023456",
+      email: "info@signinsoft.co.in",
+      hours: "Mon-Fri: 9AM-6PM\nSat: 10AM-2PM"
     },
     {
-      city: "London",
-      address: "789 Innovation Road\nLondon, UK EC1A 1BB",
-      phone: "+44 20 7123 4567",
-      email: "london@signinsoft.com",
-      hours: "Mon-Fri: 9AM-5PM\nSat: Closed"
+      city: "Dubai, UAE",
+      address: "HNS Business Center, Office 12\nEmitech Building, AL Garhood",
+      phone: "+971 554881986",
+      email: "info@signinsoft.net",
+      hours: "Mon-Fri: 9AM-6PM\nSat: Closed"
     }
   ];
 
@@ -661,21 +661,21 @@ export default function ContactPage() {
               </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <span className="font-medium">New York Office</span>
-                  <a href="tel:+15551234567" className="text-blue-600 font-semibold hover:underline">
-                    +1 (555) 123-4567
+                  <span className="font-medium">USA Office</span>
+                  <a href="tel:+13027031113" className="text-blue-600 font-semibold hover:underline">
+                    +1(302) 703-1113
                   </a>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <span className="font-medium">San Francisco Office</span>
-                  <a href="tel:+15559876543" className="text-blue-600 font-semibold hover:underline">
-                    +1 (555) 987-6543
+                  <span className="font-medium">India Office</span>
+                  <a href="tel:04040023456" className="text-blue-600 font-semibold hover:underline">
+                    040 – 40023456
                   </a>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <span className="font-medium">London Office</span>
-                  <a href="tel:+442071234567" className="text-blue-600 font-semibold hover:underline">
-                    +44 20 7123 4567
+                  <span className="font-medium">Dubai Office</span>
+                  <a href="tel:+971554881986" className="text-blue-600 font-semibold hover:underline">
+                    +971 554881986
                   </a>
                 </div>
               </div>

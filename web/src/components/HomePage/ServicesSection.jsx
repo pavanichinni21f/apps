@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
-import { Briefcase, ArrowRight, CheckCircle2, Sparkles, Zap } from "lucide-react";
+import { Briefcase, ArrowRight, CheckCircle2, Sparkles, Zap, Users, Globe, Code, UserCheck } from "lucide-react";
 import { services } from "../../data/services";
+
+// Icon mapping
+const iconMap = {
+  Briefcase: Briefcase,
+  Users: Users,
+  Globe: Globe,
+  Code: Code,
+  UserCheck: UserCheck
+};
 
 export default function ServicesSection({ isVisible }) {
     const [activeService, setActiveService] = useState(0);
@@ -89,7 +98,10 @@ export default function ServicesSection({ isVisible }) {
                                         {/* Icon glow effect */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                         <div className="relative z-10 transform hover:scale-110 transition-transform duration-300">
-                                            {services[activeService].icon}
+                                            {(() => {
+                                                const IconComponent = iconMap[services[activeService].icon];
+                                                return IconComponent ? <IconComponent className="w-8 h-8" /> : null;
+                                            })()}
                                         </div>
                                     </div>
                                     

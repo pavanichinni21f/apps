@@ -21,42 +21,48 @@ export default function SignUpPage() {
       title: "Work Visas",
       description: "Professional immigration support",
       color: "from-red-500 to-red-600",
-      delay: "0ms"
+      delay: "0ms",
+      link: "/visa/work-business"
     },
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Global Solutions",
       description: "Worldwide service network",
       color: "from-teal-500 to-teal-600",
-      delay: "200ms"
+      delay: "200ms",
+      link: "/services"
     },
     {
       icon: <Briefcase className="w-8 h-8" />,
       title: "Business Consulting",
       description: "Strategic solutions for growth",
       color: "from-blue-500 to-blue-600",
-      delay: "400ms"
+      delay: "400ms",
+      link: "/services/business-consulting"
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Employment Services",
       description: "Career guidance & placement",
       color: "from-green-500 to-green-600",
-      delay: "600ms"
+      delay: "600ms",
+      link: "/services/employment-consulting"
     },
     {
       icon: <GraduationCap className="w-8 h-8" />,
       title: "Study Abroad",
       description: "Education visa assistance",
       color: "from-purple-500 to-purple-600",
-      delay: "800ms"
+      delay: "800ms",
+      link: "/visa/study-abroad"
     },
     {
       icon: <Plane className="w-8 h-8" />,
       title: "Travel & Tourism",
       description: "Visa processing made easy",
       color: "from-orange-500 to-orange-600",
-      delay: "1000ms"
+      delay: "1000ms",
+      link: "/visa/travel-tourism"
     }
   ];
 
@@ -315,17 +321,19 @@ export default function SignUpPage() {
                   }`}
                   style={{ animationDelay: card.delay }}
                 >
-                  <div className={`bg-gradient-to-r ${card.color} p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group`}>
-                    <div className="flex items-center space-x-4">
-                      <div className="text-white group-hover:scale-110 transition-transform duration-300">
-                        {card.icon}
-                      </div>
-                      <div className="text-white">
-                        <h4 className="text-lg font-semibold">{card.title}</h4>
-                        <p className="text-white/80 text-sm">{card.description}</p>
+                  <a href={card.link} className="block">
+                    <div className={`bg-gradient-to-r ${card.color} p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group cursor-pointer`}>
+                      <div className="flex items-center space-x-4">
+                        <div className="text-white group-hover:scale-110 transition-transform duration-300">
+                          {card.icon}
+                        </div>
+                        <div className="text-white">
+                          <h4 className="text-lg font-semibold">{card.title}</h4>
+                          <p className="text-white/80 text-sm">{card.description}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               ))}
             </div>

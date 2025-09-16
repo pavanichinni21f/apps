@@ -1,10 +1,10 @@
-import { CheckSquare } from "lucide-react";
+import { CheckSquare, Phone, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="bg-blue-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div>
             <div className="flex items-center mb-4">
               <div className="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center mr-3">
@@ -149,7 +149,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="hover:text-orange-400 transition-colors"
                 >
                   Contact
@@ -172,6 +172,50 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
+            <div className="space-y-3 text-gray-300">
+              <div className="flex items-start space-x-2">
+                <MapPin className="w-4 h-4 mt-1 text-orange-400" />
+                <div>
+                  <p className="font-medium text-white">USA</p>
+                  <p className="text-sm">1553 Route 27, Room 1000-2</p>
+                  <p className="text-sm">Suite 1000, Somerset, NJ 08873</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <MapPin className="w-4 h-4 mt-1 text-orange-400" />
+                <div>
+                  <p className="font-medium text-white">India</p>
+                  <p className="text-sm">Flat no.202, Sri Sai Goverdhan Kunj</p>
+                  <p className="text-sm">SR Nagar, Hyderabad-500038</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <MapPin className="w-4 h-4 mt-1 text-orange-400" />
+                <div>
+                  <p className="font-medium text-white">Dubai, UAE</p>
+                  <p className="text-sm">HNS Business Center, Office 12</p>
+                  <p className="text-sm">Emitech Building, AL Garhood</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-orange-400" />
+                <div className="text-sm">
+                  <p>USA: +1(302) 703-1113</p>
+                  <p>India: 040 – 40023456</p>
+                  <p>Dubai: +971 554881986</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-orange-400" />
+                <div className="text-sm">
+                  <p>USA: info@signinsoft.net</p>
+                  <p>India: info@signinsoft.co.in</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="border-t border-blue-800 mt-8 pt-8 text-center text-gray-300">

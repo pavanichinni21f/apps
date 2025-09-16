@@ -525,7 +525,7 @@ export default function PrivacyPolicyPage() {
                         <Mail className="w-8 h-8 text-blue-600" />
                       </div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-                      <p className="text-gray-600">privacy@signinsoft.com</p>
+                      <p className="text-gray-600">info@signinsoft.net</p>
                       <p className="text-gray-500 text-sm mt-1">Response within 24 hours</p>
                     </div>
                     <div className="text-center">
@@ -533,7 +533,7 @@ export default function PrivacyPolicyPage() {
                         <Phone className="w-8 h-8 text-blue-600" />
                       </div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                      <p className="text-gray-600">+1(302) 703-1113</p>
                       <p className="text-gray-500 text-sm mt-1">Mon-Fri, 9 AM - 6 PM EST</p>
                     </div>
                     <div className="text-center">
@@ -552,8 +552,8 @@ export default function PrivacyPolicyPage() {
                       For specific privacy concerns or to exercise your rights under GDPR, you can contact our Data Protection Officer:
                     </p>
                     <p className="text-gray-600">
-                      <strong>Email:</strong> dpo@signinsoft.com<br />
-                      <strong>Phone:</strong> +1 (555) 123-4568
+                      <strong>Email:</strong> info@signinsoft.net<br />
+            <strong>Phone:</strong> +1(302) 703-1113
                     </p>
                   </div>
                 </div>

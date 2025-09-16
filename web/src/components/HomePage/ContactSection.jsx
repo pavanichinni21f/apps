@@ -41,7 +41,7 @@ export default function ContactSection() {
                                 <div>
                                     <div className="text-sm font-medium text-secondary mb-1">Phone Number</div>
                                     <span className="text-lg font-semibold text-primary group-hover:text-blue-600 transition-colors duration-300">
-                                        +1 (555) 123-4567
+                                        +1(302) 703-1113
                                     </span>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@ export default function ContactSection() {
                                 <div>
                                     <div className="text-sm font-medium text-secondary mb-1">Email Address</div>
                                     <span className="text-lg font-semibold text-primary group-hover:text-green-600 transition-colors duration-300">
-                                        contact@SigninSoft.com
+                                        info@signinsoft.net
                                     </span>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ export default function ContactSection() {
                                 <div>
                                     <div className="text-sm font-medium text-secondary mb-1">Office Location</div>
                                     <span className="text-lg font-semibold text-primary group-hover:text-purple-600 transition-colors duration-300">
-                                        123 Business Ave, Suite 100<br />New York, NY 10001
+                                        1553 Route 27, Room 1000-2, Suite 1000<br />Somerset, NJ 08873
                                     </span>
                                 </div>
                             </div>

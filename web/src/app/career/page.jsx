@@ -544,11 +544,11 @@ export default function CareerPage() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <Users className="w-6 h-6 text-purple-600 mr-3" />
-                  <span>careers@SigninSoft.com</span>
+                  <span>info@signinsoft.net</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="w-6 h-6 text-purple-600 mr-3" />
-                  <span>123 Business Ave, Suite 100, New York, NY 10001</span>
+                  <span>1553 Route 27, Room 1000-2, Suite 1000, Somerset, NJ 08873</span>
                 </div>
               </div>
             </div>

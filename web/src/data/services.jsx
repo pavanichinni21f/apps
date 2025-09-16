@@ -1,11 +1,9 @@
-import { Briefcase, Users, Globe, Code, UserCheck } from "lucide-react";
-
 export const services = [
     {
       title: "Business Consulting",
       description:
         "Strategic guidance to transform your business operations and drive growth",
-      icon: <Briefcase className="w-8 h-8" />,
+      icon: "Briefcase",
       features: [
         "Strategic Planning",
         "Process Optimization",
@@ -19,7 +17,7 @@ export const services = [
       title: "Employment Consulting",
       description:
         "Expert recruitment and talent acquisition services for your organization",
-      icon: <Users className="w-8 h-8" />,
+      icon: "Users",
       features: [
         "Talent Acquisition",
         "HR Strategy",
@@ -33,7 +31,7 @@ export const services = [
       title: "Visa Consulting",
       description:
         "Comprehensive immigration and visa services for individuals and businesses",
-      icon: <Globe className="w-8 h-8" />,
+      icon: "Globe",
       features: [
         "Visa Applications",
         "Immigration Law",
@@ -46,7 +44,7 @@ export const services = [
     {
       title: "Design & Development",
       description: "Custom digital solutions and innovative design services",
-      icon: <Code className="w-8 h-8" />,
+      icon: "Code",
       features: [
         "Web Development",
         "UI/UX Design",
@@ -59,7 +57,7 @@ export const services = [
     {
       title: "Staffing Services",
       description: "Flexible staffing solutions to meet your workforce needs",
-      icon: <UserCheck className="w-8 h-8" />,
+      icon: "UserCheck",
       features: [
         "Temporary Staffing",
         "Permanent Placement",

@@ -1,5 +1,12 @@
-import { Target, Sparkles } from "lucide-react";
+import { Target, Sparkles, Award, Zap } from "lucide-react";
 import { features } from "../../data/features";
+
+// Icon mapping
+const iconMap = {
+  Target: Target,
+  Award: Award,
+  Zap: Zap
+};
 
 export default function FeaturesSection({ isVisible }) {
     return (
@@ -62,7 +69,10 @@ export default function FeaturesSection({ isVisible }) {
                                             {/* Icon glow effect */}
                                             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                             <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-300">
-                                                {feature.icon}
+                                                {(() => {
+                                                    const IconComponent = iconMap[feature.icon];
+                                                    return IconComponent ? <IconComponent className="w-8 h-8" /> : null;
+                                                })()}
                                             </div>
                                         </div>
                                         

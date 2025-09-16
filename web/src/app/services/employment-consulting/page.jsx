@@ -488,11 +488,11 @@ export default function EmploymentConsultingPage() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <Phone className="w-6 h-6 text-green-600 mr-3" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+1(302) 703-1113</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-6 h-6 text-green-600 mr-3" />
-                  <span>employment@SigninSoft.com</span>
+                  <span>info@signinsoft.net</span>
                 </div>
               </div>
             </div>
